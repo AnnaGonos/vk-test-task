@@ -1,46 +1,31 @@
-# Getting Started with Create React App
+# Документация и объяснение реализации
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 1. Описание мини-приложения:
 
-## Available Scripts
+   Приложение представляет собой таблицу с возможностью динамической загрузки данных через Infinite Loader, добавления новых записей через форму с валидацией и сохранением изменений на сервере.
 
-In the project directory, you can run:
+### **Основные функциональности:**
 
-### `npm start`
+  - **Таблица:** Отображает данные из API (json-server) (Для API необходимо было использовать https://github.com/typicode/json-server файл с db нужно было приложить к проекту). 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![Изображение таблицы](./public/img1.png)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **Infinite Loader**: Решила использовать IntersectionObserver для автоматической подгрузки новых данных при достижении конца таблицы. В итоге записи, как бы по 20 штук (как батчи), подгружаются при пролистовании до конца страницы.
 
-### `npm test`
+- **Форма создания записи**: Позволяет пользователю добавлять новые записи с произвольным количеством полей (обязательные и необязательные). Здесь я немного впала в ступор, т.к. по условию не очивидно, что именно от меня хотят, а написать в поддержку не получилось (бот, к сожалению, на такие вопросы не отвечает). Поэтому интерпретировала условие как: у нас есть поля - обязательные (можно было их задать в интерфейсе, но у меня они просто на основании json файла. Т.е. поля которые есть у всех записей - они обязательные, остальные дополнительные). Если у нас в сумме полей меньше 15 (максимальное количество), то мы может добавить еще пользовательские поля (то же самое что и необязательные) при нажатии на соответствующую кнопку или, передумав, удалить, нажав на знак "-". Возможность отмены добавления записи так же предусмотрена.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Валидация**: Проверяет заполненность обязательных полей и пользовательских полей. Т.е., если нажали на "добавить поле", то его обязательно нужно заполнить, как и обязательные поля.
 
-### `npm run build`
+![Изображение формы создания записи](./public/img2.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 2. Архитектура проекта. Выбор инструмента:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Стейт-менеджмент
+    Было решено использовать локальное состояние (useState) вместо глобального стейт-менеджера (например, Redux или Context API). 
+ В первую очередь это из-за простоты проекта.Т.к. требуется управление только одним компонентом (DataTable) и его дочерними элементами. Так же у нас минимальное количество глобальных данных. Все данные хранятся внутри компонента DataTable, что по сути как аз и  упрощает управление состоянием.
+Плюс локальное состояние позволяет избежать ненужных перерисовок других частей приложения. То есть и производительность таким образом должна быть лучше.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
