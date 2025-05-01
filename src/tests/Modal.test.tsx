@@ -1,6 +1,6 @@
 import React from "react";
 import {fireEvent, render, screen} from "@testing-library/react";
-import Modal from "./Modal";
+import Modal from "../components/Modal/Modal";
 
 test("проверяет отображение модального окна", () => {
     const requiredFields = ["name", "price"];

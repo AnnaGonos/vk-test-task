@@ -1,12 +1,6 @@
 import React, {useState} from "react";
-
-interface ModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    onAdd: (newRecord: any) => void;
-    requiredFields: string[];
-    optionalFields: string[];
-}
+import './Modal.css';
+import {ModalProps} from "../../utils/Modal.types";
 
 const Modal: React.FC<ModalProps> = ({isOpen, onClose, onAdd, requiredFields, optionalFields}) => {
     const [formData, setFormData] = useState<{ [key: string]: string }>({});
@@ -80,14 +74,12 @@ const Modal: React.FC<ModalProps> = ({isOpen, onClose, onAdd, requiredFields, op
     if (!isOpen) return null;
 
     return (
-        <div style={{
-            position: "fixed", top: 0, left: 0, width: "100%", height: "100%", backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }} >
-            <div style={{background: "#fff", padding: "20px", borderRadius: "8px", width: "400px", zIndex: 1001 }}>
-                <h3>Добавить запись</h3>
+        <div className="modal-container">
+            <div className="modal-content">
+                <h3 className="modal-content__title">Добавить запись</h3>
 
                 {requiredFields.map((field) => (
-                    <div key={field}>
+                    <div className="modal-content__item" key={field}>
                         <label>{field} (обязательное):</label>
                         <input type="text" value={formData[field] || ""}
                             onChange={(e) => handleChange(field, e.target.value)}
@@ -97,7 +89,7 @@ const Modal: React.FC<ModalProps> = ({isOpen, onClose, onAdd, requiredFields, op
                 ))}
 
                 {optionalFields.map((field) => (
-                    <div key={field}>
+                    <div className="modal-content__item" key={field}>
                         <label>{field} (необязательное):</label>
                         <input type="text" value={formData[field] || ""}
                             onChange={(e) => handleChange(field, e.target.value)}
@@ -106,12 +98,9 @@ const Modal: React.FC<ModalProps> = ({isOpen, onClose, onAdd, requiredFields, op
                 ))}
 
                 {customFields.map((field, index) => (
-                    <div key={index} style={{display: "flex", flexDirection: "column", gap: "5px"}}>
+                    <div className="form-input" key={index}>
                         <div>
-                            <label>Название поля:</label>
-                            <input
-                                type="text"
-                                value={field.name}
+                            <input placeholder="Название поля" type="text" value={field.name} className="form-input__label"
                                 onChange={(e) => handleCustomFieldChange(index, "name", e.target.value)}
                             />
                             {errors[`custom_${index}_name`] && (
@@ -119,25 +108,23 @@ const Modal: React.FC<ModalProps> = ({isOpen, onClose, onAdd, requiredFields, op
                             )}
                         </div>
                         <div>
-                            <label>Значение поля:</label>
-                            <input
-                                type="text"
-                                value={field.value}
+                            <input placeholder="Значение поля" type="text" value={field.value} className="form-input__label"
                                 onChange={(e) => handleCustomFieldChange(index, "value", e.target.value)}
                             />
                             {errors[`custom_${index}_value`] && (
                                 <p style={{color: "red"}}>{errors[`custom_${index}_value`]}</p>
                             )}
+
                         </div>
-                        <button onClick={() => removeCustomField(index)}>Удалить</button>
+                        <button className="button-danger" onClick={() => removeCustomField(index)}>-</button>
                     </div>
                 ))}
 
-                <button onClick={addCustomField}>Добавить поле (+)</button>
+                <button className="button-added" onClick={addCustomField}>Добавить поле</button>
 
-                <div style={{marginTop: "20px"}}>
-                    <button onClick={handleSubmit}>Сохранить</button>
-                    <button onClick={onClose}>Отмена</button>
+                <div className="modal-content__actions">
+                    <button className="button-primary" onClick={handleSubmit}>Сохранить</button>
+                    <button className='button-secondary' onClick={onClose}>Отмена</button>
                 </div>
             </div>
         </div>

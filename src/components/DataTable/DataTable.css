@@ -1,0 +1,65 @@
+.data-table-container {
+    height: 87vh;
+    overflow: auto;
+    position: relative;
+}
+
+.add-record-button {
+    position: fixed;
+    bottom: 25px;
+    right: 20px;
+    z-index: 1000;
+    padding: 10px 20px;
+    background-color: #679936;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.add-record-button:hover {
+    opacity: 0.8;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    border: 1px solid #679936;
+}
+
+.data-table thead {
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #679936;
+    color: white;
+    top: 0;
+    z-index: 1;
+}
+
+.data-table th {
+    padding: 10px;
+    text-align: left;
+    font-weight: bold;
+    border: none;
+}
+
+.data-table tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background-color: #f3f3f3;
+}
+
+.data-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.data-table tbody tr:hover {
+    background-color: #efefef;
+}
+

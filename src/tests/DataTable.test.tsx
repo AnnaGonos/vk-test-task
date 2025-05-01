@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, waitFor, fireEvent  } from "@testing-library/react";
-import DataTable from "./DataTable";
+import DataTable from "../components/DataTable/DataTable";
 import axios from "axios";
 
 jest.mock("axios");

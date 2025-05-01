@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import axios from "axios";
+import './DataTable.css';
 import Modal from "../Modal/Modal";
 import { extractFields } from "../../utils/extractFields";
 
@@ -91,8 +92,10 @@ const DataTable: React.FC = () => {
     };
 
     return (
-        <div style={{ height: "80vh", overflow: "auto", position: "relative" }}>
-            <button onClick={() => setIsModalOpen(true)}>Добавить запись</button>
+        <div className="data-table-container">
+            <button className="add-record-button" onClick={() => setIsModalOpen(true)}>
+                Добавить запись
+            </button>
 
             <Modal
                 isOpen={isModalOpen}
@@ -102,8 +105,8 @@ const DataTable: React.FC = () => {
                 optionalFields={optionalFields}
             />
 
-            <table border={1} cellPadding={10} cellSpacing={0} style={{ width: "100%" }}>
-                <thead style={{ position: "sticky", top: 0, background: "#fff", zIndex: 1 }}>
+            <table className="data-table" cellPadding={10} cellSpacing={0}>
+                <thead style={{ position: "sticky", top: 0, zIndex: 1 }}>
                 <tr>
                     {allFields.map((field) => (
                         <th key={field}>{field}</th>
@@ -121,11 +124,10 @@ const DataTable: React.FC = () => {
                 </tbody>
             </table>
 
-            {/* Sentinel-элмеент для IntersectionObserver */}
+            {/* Sentinel-элемент для IntersectionObserver */}
             <div ref={observerTarget} style={{ height: "1px" }} />
 
             {isLoading && <div>Загружаю больше данных...</div>}
-            {/*{!hasRemainingData && <div>Больше данных нет</div>}*/}
         </div>
     );
 };
